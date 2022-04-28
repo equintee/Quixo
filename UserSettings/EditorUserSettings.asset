@@ -18,7 +18,10 @@ EditorUserSettings:
       value: 337f73
       flags: 0
     UnityRemoteDevice:
-      value: 0a7e6748245b10
+      value: 50020c0350040a0a0e0f5a7647760a4115461d2b2d2b20602e7c4566b7b5303eb4e263bbe5633c6c
+      flags: 0
+    UnityRemoteJoystickSource:
+      value: 315459091150
       flags: 0
     UnityRemoteResolution:
       value: 2d5e460b0459
