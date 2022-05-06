@@ -5,9 +5,10 @@ using UnityEngine;
 public class gameController : MonoBehaviour
 {
     public Camera mainCamera;
-    protected List<List<GameObject>> cubeList;
+    public static List<List<GameObject>> cubeList;
 
     private GameObject selectedCube;
+    public static bool rotatingSelectedCube = false;
     void Start()
     {
         cubeList = new List<List<GameObject>>();
@@ -22,9 +23,9 @@ public class gameController : MonoBehaviour
             }
             cubeList.Add(tempVerticalCubeList);           
         }
+        selectedCube = cubeList[0][0];
     }
 
-    private float deltaTime = 0f;
     private Touch touch;
     void Update()
     {
@@ -32,25 +33,31 @@ public class gameController : MonoBehaviour
         {
             RaycastHit hit;
             touch = Input.GetTouch(0);
-            deltaTime -= Time.deltaTime;
             //if (touch.phase == TouchPhase.Moved) deltaTime = 0;
             //else deltaTime += Time.deltaTime;
             var ray = mainCamera.ScreenPointToRay(touch.position);
-            if(Physics.Raycast(ray,out hit) && deltaTime <= 0)
+            if (Physics.Raycast(ray, out hit))
             {
-                deltaTime = 1f;
-                string nameOfHittedCube = hit.transform.name;
+                if (!checkIfCubeIsLegalToMove(hit.transform.name))
+                {
+                    rotatingSelectedCube = false;
+                    return;
+                }
 
-                //To check horizantal edges
-                if (!checkHorizantalEdges(nameOfHittedCube))
+                if (selectedCube.gameObject.name != hit.transform.gameObject.name)
                 {
-                    checkVerticalEdges(nameOfHittedCube);      
+                    selectedCube.gameObject.GetComponent<cubeController>().isSelected = false;
+                    selectedCube.gameObject.GetComponent<cubeController>().resetCube();
+                    selectedCube = hit.transform.gameObject;
                 }
-                if (selectedCube != null)
+
+                if (!selectedCube.GetComponent<cubeController>().isSelected)
                 {
-                    selectedCube.SetActive(false);
+                    selectedCube.GetComponent<cubeController>().isSelected = true;
                 }
+                rotatingSelectedCube = true;
             }
+            else rotatingSelectedCube = false;
         }
     }
 
@@ -61,13 +68,11 @@ public class gameController : MonoBehaviour
             //Top horizantal edge
             if (cubeList[0][i].transform.name == nameOfHittedCube)
             {
-                selectedCube = cubeList[0][i];
                 return true;
             }
             //Bottom horizantal edge;
             if (cubeList[4][i].transform.name == nameOfHittedCube)
             {
-                selectedCube = cubeList[4][i];
                 return true;
             }
         }
@@ -80,16 +85,19 @@ public class gameController : MonoBehaviour
         {
             if(cubeList[i][0].transform.name == nameOfHittedCube)
             {
-                selectedCube = cubeList[i][0];
                 return true;
             }
 
             if(cubeList[i][4].transform.name == nameOfHittedCube)
             {
-                selectedCube = cubeList[i][0];
                 return true;
             }            
         }
         return false;
+    }
+
+    private bool checkIfCubeIsLegalToMove(string nameOfHittedCube)
+    {
+        return checkHorizantalEdges(nameOfHittedCube) || checkVerticalEdges(nameOfHittedCube);
     }
 }

@@ -18,7 +18,7 @@ public class touchRotation : MonoBehaviour
 
     void Update()
     {
-        if (Input.touches.Length > 0)
+        if (Input.touches.Length > 0 && !gameController.rotatingSelectedCube)
         {
             touch = Input.GetTouch(0);
 
