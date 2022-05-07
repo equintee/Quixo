@@ -8,7 +8,9 @@ public class gameController : MonoBehaviour
     public static List<List<GameObject>> cubeList;
 
     private GameObject selectedCube;
-    public static bool rotatingSelectedCube = false;
+    public static bool lockCameraRotation = false;
+    private bool movingCube = false;
+    public bool temp;
     void Start()
     {
         cubeList = new List<List<GameObject>>();
@@ -29,35 +31,44 @@ public class gameController : MonoBehaviour
     private Touch touch;
     void Update()
     {
+        temp = !touchRotation.isBoardRotating;
         if(Input.touches.Length > 0 && !touchRotation.isBoardRotating)
         {
             RaycastHit hit;
             touch = Input.GetTouch(0);
-            //if (touch.phase == TouchPhase.Moved) deltaTime = 0;
-            //else deltaTime += Time.deltaTime;
+            
             var ray = mainCamera.ScreenPointToRay(touch.position);
             if (Physics.Raycast(ray, out hit))
             {
-                if (!checkIfCubeIsLegalToMove(hit.transform.name))
+                
+                if (selectedCube.gameObject.name != hit.transform.gameObject.name && !movingCube && checkIfCubeIsLegalToMove(hit.transform.name))
                 {
-                    rotatingSelectedCube = false;
-                    return;
-                }
-
-                if (selectedCube.gameObject.name != hit.transform.gameObject.name)
-                {
-                    selectedCube.gameObject.GetComponent<cubeController>().isSelected = false;
+                    selectedCube.gameObject.GetComponent<cubeController>().cubeAnimated = false;
                     selectedCube.gameObject.GetComponent<cubeController>().resetCube();
                     selectedCube = hit.transform.gameObject;
+                    selectedCube.GetComponent<cubeController>().cubeAnimated = true;
+                    lockCameraRotation = false;
                 }
-
-                if (!selectedCube.GetComponent<cubeController>().isSelected)
+                
+                if(touch.phase == TouchPhase.Moved)
                 {
-                    selectedCube.GetComponent<cubeController>().isSelected = true;
+
+                    Vector3 cubeMovment = mainCamera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
+                    cubeMovment.y = 1;
+                    selectedCube.GetComponent<cubeController>().cubeAnimated = false;
+                    selectedCube.transform.position = cubeMovment;
+                    movingCube = true;
+                    lockCameraRotation = true;
                 }
-                rotatingSelectedCube = true;
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    selectedCube.GetComponent<cubeController>().resetCube();
+                    selectedCube.GetComponent<cubeController>().cubeAnimated = true;
+                    lockCameraRotation = false;
+                    movingCube = false;
+                }
             }
-            else rotatingSelectedCube = false;
+            else lockCameraRotation = false;
         }
     }
 

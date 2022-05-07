@@ -9,6 +9,7 @@ public class touchRotation : MonoBehaviour
     Rigidbody rb;
     public GameObject gameBoard;
     private float _angle = 0.5f;
+    public bool temp;
 
     public static bool isBoardRotating = false;
     void Start()
@@ -18,17 +19,18 @@ public class touchRotation : MonoBehaviour
 
     void Update()
     {
-        if (Input.touches.Length > 0 && !gameController.rotatingSelectedCube)
+        temp = !gameController.lockCameraRotation;
+        if (Input.touches.Length > 0 && !gameController.lockCameraRotation)
         {
             touch = Input.GetTouch(0);
-
+            
             if (touch.phase == TouchPhase.Moved)
             {
                 isBoardRotating = true;
                 var delta = touch.deltaPosition.x * rotationSpeed * Time.deltaTime * -1;
                 gameBoard.transform.eulerAngles += new Vector3(0f, delta, 0f);
 
-                _angle += (touch.deltaPosition.y / Screen.height) * 2;
+               /* _angle += (touch.deltaPosition.y / Screen.height) * 2;
                 if (_angle >= Mathf.PI)
                 {
                     _angle = Mathf.PI;
@@ -50,13 +52,12 @@ public class touchRotation : MonoBehaviour
                 Vector3 directionToGameBoard = gameBoard.transform.position - transform.position;
                 transform.rotation = Quaternion.LookRotation(directionToGameBoard);
 
-                rb.constraints &= ~RigidbodyConstraints.FreezePosition;
-            }
-            else if (touch.phase == TouchPhase.Ended) isBoardRotating = false;
-        }
+                rb.constraints &= ~RigidbodyConstraints.FreezePosition;*/
+            } 
+        } else isBoardRotating = false;
 
-        
-        
+
+
 
     }
 

@@ -6,7 +6,9 @@ public class cubeController : MonoBehaviour
 {
     // Start is called before the first frame update
     private int cubeValue = 0; //0=empty, 1=X, 2=O
-    public bool isSelected = false;
+    private Touch touch;
+    public bool cubeAnimated = false;
+    public bool cubeMoving = false;
     public Vector3 defaultPosition;
     void Start()
     {
@@ -17,7 +19,7 @@ public class cubeController : MonoBehaviour
 
     void Update()
     {
-        if (isSelected) animateCube();
+        if (cubeAnimated) animateCube();
 
 
     }
@@ -56,7 +58,8 @@ public class cubeController : MonoBehaviour
                 {
                     defaultPosition = new Vector3((2-j) * 0.86f,0, (i-2) * 0.86f);
                     transform.localPosition = defaultPosition;
-                    isSelected = false;
+                    cubeAnimated = false;
+                    cubeMoving = false;
                     return;
                 }
             }
