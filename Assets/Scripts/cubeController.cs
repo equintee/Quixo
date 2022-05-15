@@ -5,13 +5,14 @@ using UnityEngine;
 public class cubeController : MonoBehaviour
 {
     // Start is called before the first frame update
-    private int cubeValue = 0; //0=empty, 1=X, 2=O
+    public int cubeValue = 2; //0:X 1:O 2:empty
     private Touch touch;
     public bool cubeAnimated = false;
     public bool cubeMoving = false;
     public Vector3 defaultPosition;
     void Start()
     {
+        cubeValue = 2;
         defaultPosition = transform.localPosition;
     }
 
@@ -58,21 +59,20 @@ public class cubeController : MonoBehaviour
                 {
                     defaultPosition = new Vector3((2-j) * 0.86f,0, (i-2) * 0.86f);
                     transform.localPosition = defaultPosition;
+
+                    transform.localRotation = cubeValue == 2 ? Quaternion.Euler(90, 0, 0) : Quaternion.Euler(cubeValue * 180 + 180, 0, 0);
+
                     cubeAnimated = false;
                     cubeMoving = false;
+                    deltaTime = 0;
                     return;
                 }
             }
         }
     }
-    public void changeCubeToX()
+    
+    public void rotateCube() //0:X 1:O
     {
-        cubeValue = 1;
-        float deltaTime = 0f;
-        while(deltaTime <= 2f)
-        {
-            deltaTime += Time.deltaTime;
-            transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(90,0,0,0), deltaTime);
-        }
+        transform.localRotation = cubeValue == 2 ? Quaternion.Euler(90, 0, 0) : Quaternion.Euler(cubeValue * 180 + 180, 0, 0);
     }
 }

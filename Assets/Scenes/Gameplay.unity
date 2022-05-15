@@ -337,6 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -866,6 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -1267,6 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -1719,6 +1722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -2282,6 +2286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -2350,6 +2355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -2569,6 +2575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -3546,6 +3553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -4574,6 +4582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -5680,6 +5689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -7002,6 +7012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -7676,6 +7687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -8047,6 +8059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -8469,6 +8482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -8699,6 +8713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -8848,6 +8863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -9552,6 +9568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -10205,6 +10222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -10606,6 +10624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -10917,6 +10936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -11651,6 +11671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -11800,6 +11821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -11868,6 +11890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -15441,6 +15464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
@@ -16571,6 +16595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3dac0bb1c49694690516ccb4f69ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeValue: 0
   cubeAnimated: 0
   cubeMoving: 0
   defaultPosition: {x: 0, y: 0, z: 0}
