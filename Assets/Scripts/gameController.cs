@@ -142,6 +142,7 @@ public class gameController : MonoBehaviour
                         selectedCube.GetComponent<cubeController>().cubeValue = turn;
                         cubeValueBeforePlaced = turn;
                         validCube = false;
+                        checkGameStatus();
                         turn = turn == 1 ? 0 : 1;
                     }
 
@@ -311,9 +312,52 @@ public class gameController : MonoBehaviour
                 return true;
 
         }
-        return false;
+        return false;     
                 
-                
-                
+    }
+
+    private int checkGameStatus() //-1 no winner, 1:X, 2:O
+    {
+        int winner = -1;
+        for(int i = 0; i<5; i++)
+        {
+            int verticalWinner = cubeList[i][0].GetComponent<cubeController>().cubeValue;
+            for(int j = 0; j<5; j++)
+            {
+                if (cubeList[i][j].GetComponent<cubeController>().cubeValue == 2) break;
+                if (verticalWinner != cubeList[i][j].GetComponent<cubeController>().cubeValue) break;
+                if(j == 4)
+                {
+                    winner = verticalWinner;
+                    if (winner != turn) return endGameScreen(winner);
+                }
+            }
+        }
+
+        for(int i = 0; i<5; i++)
+        {
+            int horizantalWinner = cubeList[i][0].GetComponent<cubeController>().cubeValue;
+            for (int j = 0; j<5; j++)
+            {
+                if (cubeList[j][i].GetComponent<cubeController>().cubeValue == 2) break;
+                if (horizantalWinner != cubeList[j][i].GetComponent<cubeController>().cubeValue) break;
+                if(j == 4)
+                {
+                    winner = horizantalWinner;
+                    if (winner != turn) return endGameScreen(winner);
+                }
+            }
+        }
+
+        return endGameScreen(winner);
+    }
+
+    private int endGameScreen(int winner)
+    {
+        if (winner == -1) Debug.Log("No one wins.");
+        if (winner == 0) Debug.Log("X wins.");
+        if (winner == 1) Debug.Log("O wins.");
+
+        return winner;
     }
 }
