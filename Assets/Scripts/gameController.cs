@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class gameController : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class gameController : MonoBehaviour
     public static bool lockCameraRotation = false;
     private bool movingCube = false;
     public float temp;
+    private bool gameEnded = false;
+    private GameObject turnCanvas;
+    private GameObject endGameCanvas;
     void Start()
     {
         cubeList = new List<List<GameObject>>();
@@ -27,6 +31,10 @@ public class gameController : MonoBehaviour
             cubeList.Add(tempVerticalCubeList);           
         }
         selectedCube = cubeList[0][0];
+
+        turnCanvas = GameObject.Find("Turn Canvas");
+        endGameCanvas = GameObject.Find("End Game Canvas");
+
     }
 
     private Touch touch;
@@ -34,7 +42,7 @@ public class gameController : MonoBehaviour
     int cubeValueBeforePlaced = 2;
     void Update()
     {
-        if (Input.touches.Length > 0 && !touchRotation.isBoardRotating)
+        if (Input.touches.Length > 0 && !touchRotation.isBoardRotating && !gameEnded)
         {
             RaycastHit hit;
             touch = Input.GetTouch(0);
@@ -142,8 +150,9 @@ public class gameController : MonoBehaviour
                         selectedCube.GetComponent<cubeController>().cubeValue = turn;
                         cubeValueBeforePlaced = turn;
                         validCube = false;
-                        checkGameStatus();
                         turn = turn == 1 ? 0 : 1;
+                        checkGameStatus();
+                        
                     }
 
                     resetAllCubes();
@@ -329,14 +338,14 @@ public class gameController : MonoBehaviour
                 if(j == 4)
                 {
                     winner = verticalWinner;
-                    if (winner != turn) return endGameScreen(winner);
+                    if (winner != turn) return screenController(winner);
                 }
             }
         }
 
         for(int i = 0; i<5; i++)
         {
-            int horizantalWinner = cubeList[i][0].GetComponent<cubeController>().cubeValue;
+            int horizantalWinner = cubeList[0][i].GetComponent<cubeController>().cubeValue;
             for (int j = 0; j<5; j++)
             {
                 if (cubeList[j][i].GetComponent<cubeController>().cubeValue == 2) break;
@@ -344,19 +353,34 @@ public class gameController : MonoBehaviour
                 if(j == 4)
                 {
                     winner = horizantalWinner;
-                    if (winner != turn) return endGameScreen(winner);
+                    if (winner != turn) return screenController(winner);
                 }
             }
         }
 
-        return endGameScreen(winner);
+        
+        
+
+        return screenController(winner);
     }
 
-    private int endGameScreen(int winner)
+    private int screenController(int winner)
     {
-        if (winner == -1) Debug.Log("No one wins.");
-        if (winner == 0) Debug.Log("X wins.");
-        if (winner == 1) Debug.Log("O wins.");
+        if (winner == -1)
+        {
+            turnCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = turn == 0 ? "Turn: X" : "Turn: O";
+        }
+        else
+        {
+            turnCanvas.SetActive(false);
+            endGameCanvas.SetActive(true);
+            endGameCanvas.transform.Find("End Game Background").gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = winner == 0 ? "Winner X!" : "Winner O!";
+            endGameCanvas.transform.Find("End Game Background").gameObject.SetActive(true);
+        }
+        
+        
+
+        gameEnded = winner == -1 ? false : true;
 
         return winner;
     }
