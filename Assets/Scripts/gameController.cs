@@ -9,7 +9,7 @@ public class gameController : MonoBehaviour
     public static List<List<GameObject>> cubeList;
 
     public static int turn = 0; //0:X 1:O
-    private GameObject selectedCube;
+    public static GameObject selectedCube;
     public static bool lockCameraRotation = false;
     private bool movingCube = false;
     public float temp;
@@ -42,6 +42,12 @@ public class gameController : MonoBehaviour
     int cubeValueBeforePlaced = 2;
     void Update()
     {
+        if (AIHandeler.AITurn)
+        {
+            cubeValueBeforePlaced = turn;
+            return;
+        }
+
         if (Input.touches.Length > 0 && !touchRotation.isBoardRotating && !gameEnded)
         {
             RaycastHit hit;
@@ -151,6 +157,7 @@ public class gameController : MonoBehaviour
                         cubeValueBeforePlaced = turn;
                         validCube = false;
                         turn = turn == 1 ? 0 : 1;
+                        AIHandeler.AITurn = !AIHandeler.AITurn;
                         checkGameStatus();
                         
                     }
@@ -226,7 +233,7 @@ public class gameController : MonoBehaviour
             return position;
     }
 
-    private void resetAllCubes()
+    public void resetAllCubes()
     {
         foreach(List<GameObject> row in cubeList)
         {
@@ -237,7 +244,7 @@ public class gameController : MonoBehaviour
         }
     }
 
-    private bool placeCube()
+    public bool placeCube()
     {
         int? rotation = null; // 0:down, 1:up, 2:left, 3:right
         if(selectedCube.GetComponent<cubeController>().defaultPosition.z != selectedCube.transform.localPosition.z && selectedCube.GetComponent<cubeController>().defaultPosition.x + 0.86f > selectedCube.transform.localPosition.x && selectedCube.transform.localPosition.x > selectedCube.GetComponent<cubeController>().defaultPosition.x - 0.86f)
@@ -325,7 +332,7 @@ public class gameController : MonoBehaviour
                 
     }
 
-    private int checkGameStatus() //-1 no winner, 1:X, 2:O
+    public int checkGameStatus() //-1 no winner, 1:X, 2:O
     {
         int winner = -1;
         for(int i = 0; i<5; i++)
@@ -384,4 +391,51 @@ public class gameController : MonoBehaviour
 
         return winner;
     }
+
+    /*private void AIHandeler()
+    {
+        while (true) {
+        int[] position = AIPickPiece();
+        selectedCube = cubeList[position[0]][position[1]];
+        int move = AIPickMove(position);
+            Debug.Log("yar");
+        }
+
+    }
+
+    private int[] AIPickPiece()
+    {
+        int row, col;
+        while (true) { 
+            row = Random.Range(0, 4);
+            if (row == 0 || row == 4) col = Random.Range(0, 4);
+            else col = Random.Range(0, 1) == 1 ? 4 : 0;
+            if (cubeList[row][col].GetComponent<cubeController>().cubeValue != 0) break;
+        }
+
+        int[] position = new int[2];
+        position[0] = row;
+        position[1] = col;
+
+        return position;
+    }
+
+    public int AIPickMove(int[] position)
+    {
+        int move = -1;
+
+        while(move == -1)
+        {
+            int temp = Random.Range(0, 3);
+
+            if (temp == 0 && position[0] == 4) continue;
+            if (temp == 1 && position[0] == 0) continue;
+            if (temp == 2 && position[1] == 0) continue;
+            if (temp == 3 && position[1] == 4) continue;
+
+            move = temp;
+        }
+
+        return move;
+    }*/
 }
