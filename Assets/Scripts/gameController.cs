@@ -157,8 +157,9 @@ public class gameController : MonoBehaviour
                         cubeValueBeforePlaced = turn;
                         validCube = false;
                         turn = turn == 1 ? 0 : 1;
-                        AIHandeler.AITurn = !AIHandeler.AITurn;
-                        checkGameStatus();
+                        int winner = checkGameStatus();
+                        AIHandeler.AITurn = winner == -1 ?!AIHandeler.AITurn : false;
+                        
                         
                     }
 
@@ -365,7 +366,31 @@ public class gameController : MonoBehaviour
             }
         }
 
-        
+        int y = 0;
+        int diagonalWinner = cubeList[0][0].GetComponent<cubeController>().cubeValue;
+        for(int i = 1; i<5; i++)
+        {
+            y = i;
+            if (diagonalWinner != cubeList[i][y].GetComponent<cubeController>().cubeValue || diagonalWinner == 2) break;
+            if(i == 4)
+            {
+                winner = diagonalWinner;
+                if (winner != turn) return screenController(winner);
+            }
+        }
+
+        y = 4;
+        diagonalWinner = cubeList[0][y].GetComponent<cubeController>().cubeValue;
+        for(int i = 1; i>5; i++)
+        {
+            y--;
+            if (diagonalWinner != cubeList[i][y].GetComponent<cubeController>().cubeValue || diagonalWinner == 2) break;
+            if(i == 4)
+            {
+                winner = diagonalWinner;
+                if(winner != turn) return screenController(winner);
+            }
+        }
         
 
         return screenController(winner);
@@ -392,50 +417,4 @@ public class gameController : MonoBehaviour
         return winner;
     }
 
-    /*private void AIHandeler()
-    {
-        while (true) {
-        int[] position = AIPickPiece();
-        selectedCube = cubeList[position[0]][position[1]];
-        int move = AIPickMove(position);
-            Debug.Log("yar");
-        }
-
-    }
-
-    private int[] AIPickPiece()
-    {
-        int row, col;
-        while (true) { 
-            row = Random.Range(0, 4);
-            if (row == 0 || row == 4) col = Random.Range(0, 4);
-            else col = Random.Range(0, 1) == 1 ? 4 : 0;
-            if (cubeList[row][col].GetComponent<cubeController>().cubeValue != 0) break;
-        }
-
-        int[] position = new int[2];
-        position[0] = row;
-        position[1] = col;
-
-        return position;
-    }
-
-    public int AIPickMove(int[] position)
-    {
-        int move = -1;
-
-        while(move == -1)
-        {
-            int temp = Random.Range(0, 3);
-
-            if (temp == 0 && position[0] == 4) continue;
-            if (temp == 1 && position[0] == 0) continue;
-            if (temp == 2 && position[1] == 0) continue;
-            if (temp == 3 && position[1] == 4) continue;
-
-            move = temp;
-        }
-
-        return move;
-    }*/
 }
