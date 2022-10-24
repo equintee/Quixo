@@ -14,9 +14,9 @@ public class gameController : MonoBehaviour
     private bool movingCube = false;
     public float temp;
     private bool gameEnded = false;
-    private GameObject turnCanvas;
-    private GameObject endGameCanvas;
-    void Start()
+    public GameObject turnCanvas;
+    public GameObject endGameCanvas;
+    void Awake()
     {
         cubeList = new List<List<GameObject>>();
 
@@ -31,10 +31,6 @@ public class gameController : MonoBehaviour
             cubeList.Add(tempVerticalCubeList);           
         }
         selectedCube = cubeList[0][0];
-
-        turnCanvas = GameObject.Find("Turn Canvas");
-        endGameCanvas = GameObject.Find("End Game Canvas");
-
     }
 
     private Touch touch;
@@ -400,14 +396,14 @@ public class gameController : MonoBehaviour
     {
         if (winner == -1)
         {
-            turnCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = turn == 0 ? "Turn: X" : "Turn: O";
+            turnCanvas.GetComponentInChildren<TextMeshProUGUI>().text = turn == 0 ? "Turn: X" : "Turn: O";
         }
         else
         {
             turnCanvas.SetActive(false);
             endGameCanvas.SetActive(true);
-            endGameCanvas.transform.Find("End Game Background").gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = winner == 0 ? "Winner X!" : "Winner O!";
-            endGameCanvas.transform.Find("End Game Background").gameObject.SetActive(true);
+            endGameCanvas.GetComponentInChildren<TextMeshProUGUI>().text = winner == 0 ? "Winner X!" : "Winner O!";
+            endGameCanvas.SetActive(true);
         }
         
         
