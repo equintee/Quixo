@@ -1,22 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class AIHandeler : MonoBehaviour
 {
-    public static bool AITurn = false;
-    gameController gameController;
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameController = GetComponent<gameController>();
-    }
-
-    // Update is called once per frame
     private float deltaTime = 0f;
     public GameObject AIPickedCube;
     private int[] position = new int[2];
     public int move = -1;
+
+    private minMax MinMaxAI;
+    public static bool AITurn = false;
+    gameController gameController;
+    // Start is called before the first frame update
+    void Awake()
+    {
+        gameController = GetComponent<gameController>();
+        MinMaxAI = new minMax(1);
+        AITurn = false;
+    }
+
+    // Update is called once per frame
     void Update()
     {
         if (AITurn)
@@ -24,8 +29,9 @@ public class AIHandeler : MonoBehaviour
             deltaTime += Time.deltaTime;
             if(move == -1)
             {
-                position = AIPickPiece();
-                move = AIPickMove(position);
+                int[] AIMove = MinMaxAI.MiniMax(gameController.gameBoardToArray(), 4);
+                position = new int[2] {AIMove[0], AIMove[1]};
+                move = AIMove[2];
                 AIPickedCube = gameController.cubeList[position[0]][position[1]];
                 gameController.selectedCube = AIPickedCube;
                 AIPickedCube.GetComponent<cubeController>().cubeValue = gameController.turn;

@@ -21,16 +21,19 @@ public class minMax
     private int opponentSymbol;
     private int[,] board;
     //CUBE VALUES = 0:X 1:O 2:empty
-    public minMax(int symbol, int[,] board){
+    public minMax(int symbol){
         AISymbol = symbol;
         opponentSymbol = AISymbol == 0 ? 1 : 0;
-        this.board = board;
     }
 
     public int[] MiniMax(int[,] board, int depth){
         Dictionary<int[], int> scores = new Dictionary<int[], int>();
-        foreach(int[] avaliableMove in AvaliableMoves(board, AISymbol))
-            scores[avaliableMove] = MiniMax(board, depth, true);
+        depth--;
+        foreach(int[] avaliableMove in AvaliableMoves(board, AISymbol)){
+            int[,] childBoard = MakeMove((int[,]) board.Clone(), avaliableMove, AISymbol);
+            scores.Add(avaliableMove,MiniMax(childBoard, depth, false));
+        }
+            
         
         int topScore = int.MinValue;
         int[] topMove = new int[3];
@@ -45,30 +48,39 @@ public class minMax
     }
     public int MiniMax(int[,] board, int depth, bool maximazingPlayer){
         
+        depth--;
         if(depth == 0)
-            return(EvaluateBoard(board, AISymbol));
+            return(EvaluateBoard(board, AISymbol, depth));
+        
+        int winner = DetermineWinner(board);
+        if(winner != -1)
+            return winner == AISymbol ? 1000 + depth: -1000 + depth;
         
         List<int> scores = new List<int>();
-        depth--;
 
         if(maximazingPlayer){
             foreach(int[] avaliableMove in AvaliableMoves(board, AISymbol)){
                 int[,] childBoard = MakeMove((int[,]) board.Clone(), avaliableMove, AISymbol);
-                scores.Append(MiniMax(childBoard, depth, false));
+                int score = MiniMax(childBoard, depth, true);
+                scores.Add(score);
             }
         }
         else{
             foreach(int[] avaliableMove in AvaliableMoves(board, opponentSymbol)){
                 int[,] childBoard = MakeMove((int[,]) board.Clone(), avaliableMove, opponentSymbol);
-                scores.Append(MiniMax(childBoard, depth, true));
+                int score = MiniMax(childBoard, depth, true);
+                scores.Add(score);
             }
         }
 
         return maximazingPlayer ? scores.Max() : scores.Min();
     }
 
-    private int EvaluateBoard(int[,] board, int AISymbol){
+    private int EvaluateBoard(int[,] board, int AISymbol, int depth){
         int boardValue = 0;
+        int winner = DetermineWinner(board);
+        if(winner != -1)
+            return winner == AISymbol ? 1000 + depth: -1000 + depth;
 
         for(int i = 0; i < board.GetLength(0); i++)
             for(int j = 0; j < board.GetLength(1); j++){
@@ -79,33 +91,76 @@ public class minMax
                 else if(board[i,j] == 2)
                     continue;
                 else
-                    boardValue -= board[i,j];
+                    boardValue -= cubePositionRewards[i,j];
             }
         
         return boardValue;
     }
 
+    public int DetermineWinner(int[,] board){
+        //Detirmine left diagonal winner
+        for(int i = 0; i < 4; i++){
+            if(board[i,i] != board[i+1,i+1] || board[i,i] == 2)
+                break;
+            if(i==3)
+                return board[i,i];
+        }
+
+        //Detirmine right diagonal winner
+        int j = 4;
+        for(int i=0; i < 4; i++){
+            if(board[i,j] != board[i + 1, j-1] || board[i,j] == 2)
+                break;
+            j--;
+            if(i==3)
+                return board[i + 1,j];
+        }
+
+        //Detirmine horizontal winner
+        for(int i = 0; i < 5; i++){
+            for(j = 0; j < 4; j++){
+                if(board[i,j] != board[i,j + 1] || board[i,j] == 2)
+                    break;
+
+                if(j == 3)
+                    return board[i,j];
+            }
+        }
+
+        //Detirmine vertical winner
+        for(int i = 0; i < 5; i++){
+            for(j = 0; j < 4; j++){
+                if(board[j, i] != board[j+1, i] || board[j,i] == 2)
+                    break;
+                    
+                if(j == 3)
+                    return board[j, i];
+            }
+        }
+
+        return -1;
+    }
     
     private List<int[]> AvaliableMoves(int[,] board, int turnSymbol){
         List<int[]> avaliablePieces = new List<int[]>();
         List<int[]> avaliableMoves = new List<int[]>(); 
         for(int j = 0; j < 5; j++){
             //Top row check
-            if(board[0,j] == turnSymbol && board[0,j] == 2)
+            if(board[0,j] == turnSymbol || board[0,j] == 2)
                 avaliablePieces.Add(new int[] {0,j});
 
             // Bottom row check
-            if(board[4,j] == turnSymbol && board[4,j] == 2)
+            if(board[4,j] == turnSymbol || board[4,j] == 2)
                 avaliablePieces.Add(new int[] {4,j}); 
         }
 
         for(int i = 1; i < 4; i++){
             //Left side check
-            if(board[i,0] == turnSymbol && board[i,0] == 2)
+            if(board[i,0] == turnSymbol || board[i,0] == 2)
                 avaliablePieces.Add(new int[] {i,0});
             
             //Right side check
-            if(board[i,4] == turnSymbol && board[i,4] == 2)
+            if(board[i,4] == turnSymbol || board[i,4] == 2)
                 avaliablePieces.Add(new int[] {i,4});
         }
 
@@ -138,25 +193,29 @@ public class minMax
             case 0:
                 for(int i = move[0] + 1; 5 > i; i++)
                     board[i - 1, move[1]] = board[i,move[1]];
+                board[4, move[1]] = symbol;
                 break;
             
             case 1:
                 for(int i = move[0] - 1; -1 > i; i--)
                     board[i + 1, move[1]] = board[i, move[1]];
+                board[0, move[1]] = symbol;
                 break;
             
             case 2:
                 for(int i = move[1] - 1; i > -1; i--)
                     board[move[0], i + 1] = board[move[0], i];
+                board[move[0], 0] = symbol;
                 break;
             
             case 3:
                 for(int i = move[1] + 1; 5 > i; i++)
                     board[move[0], i - 1]  = board[move[0], i];
+                board[move[0], 4] = symbol;
                 break;
         }
         
-        board[move[0], move[1]] = symbol;
+        
         return board;
     }
 }

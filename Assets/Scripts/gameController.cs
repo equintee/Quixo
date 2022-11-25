@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public class gameController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class gameController : MonoBehaviour
     public GameObject endGameCanvas;
     void Awake()
     {
+        turn = 0;
         cubeList = new List<List<GameObject>>();
 
         for (int i = 0; i < 25; i+=5)
@@ -411,6 +413,16 @@ public class gameController : MonoBehaviour
         gameEnded = winner == -1 ? false : true;
 
         return winner;
+    }
+
+    public int[,] gameBoardToArray(){
+        int[,] gameBoardArray = new int[5,5];
+
+        for(int i = 0; i < cubeList.Count; i++)
+            for(int j = 0; j < cubeList[i].Count; j++)
+                gameBoardArray[i,j] = cubeList[i][j].GetComponent<cubeController>().cubeValue;
+
+        return gameBoardArray;
     }
 
 }
