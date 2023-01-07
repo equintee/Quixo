@@ -29,7 +29,7 @@ public class AIHandeler : MonoBehaviour
             deltaTime += Time.deltaTime;
             if(move == -1)
             {
-                int[] AIMove = MinMaxAI.MiniMax(gameController.gameBoardToArray(), 4);
+                int[] AIMove = MinMaxAI.MiniMax(gameController.gameBoardToArray(), 2);
                 position = new int[2] {AIMove[0], AIMove[1]};
                 move = AIMove[2];
                 AIPickedCube = gameController.cubeList[position[0]][position[1]];
