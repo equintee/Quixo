@@ -11,14 +11,15 @@ public class AIHandeler : MonoBehaviour
     [HideInInspector]public int move = -1;
     [Range(1,5)]
     public int minMaxDepth;
-    private minMax MinMaxAI;
+    private IAgent AIAgent;
     public static bool AITurn = false;
     gameController gameController;
     // Start is called before the first frame update
     void Awake()
     {
         gameController = GetComponent<gameController>();
-        MinMaxAI = new minMax(1);
+        if(GamePlayDataHolder.Instance.selectedAgent == 1)
+            AIAgent = new minMax(1, minMaxDepth);
         AITurn = false;
     }
 
@@ -30,7 +31,7 @@ public class AIHandeler : MonoBehaviour
             deltaTime += Time.deltaTime;
             if(move == -1)
             {
-                int[] AIMove = MinMaxAI.MiniMax(gameController.gameBoardToArray(), minMaxDepth);
+                int[] AIMove =  AIAgent.MakeMove(gameController.gameBoardToArray());
                 position = new int[2] {AIMove[0], AIMove[1]};
                 move = AIMove[2];
                 AIPickedCube = gameController.cubeList[position[0]][position[1]];

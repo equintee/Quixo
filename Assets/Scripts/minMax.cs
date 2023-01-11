@@ -6,7 +6,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class minMax
+public class minMax : IAgent
 {
     private int[,] cubePositionRewards = new int[,]
     {
@@ -20,13 +20,15 @@ public class minMax
     private int AISymbol;
     private int opponentSymbol;
     private int[,] board;
+    public int depth;
     //CUBE VALUES = 0:X 1:O 2:empty
-    public minMax(int symbol){
+    public minMax(int symbol, int depth){
         AISymbol = symbol;
         opponentSymbol = AISymbol == 0 ? 1 : 0;
+        this.depth = depth;
     }
 
-    public int[] MiniMax(int[,] board, int depth){
+    public int[] MakeMove(int[,] board){
         Dictionary<int[], int> scores = new Dictionary<int[], int>();
         depth--;
         foreach(int[] avaliableMove in AvaliableMoves(board, AISymbol)){

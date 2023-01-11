@@ -9,6 +9,7 @@ public class GamePlayDataHolder : MonoBehaviour
     public int[] suggestedCube;
     public int move;
     public bool AISuggestedMove = false;
+    public int selectedAgent = 1; //1 miniMax, 2 Q Learning
     private void Awake() 
     { 
         // If there is an instance, and it's not me, delete myself.
