@@ -52,6 +52,6 @@ def cropCirle():
 
     cv2.imwrite("cropCircle.png", img)
     cv2.imshow("Detected circles", img)
-    cv2.waitKey(1)
+    cv2.waitKey(0)
     
 

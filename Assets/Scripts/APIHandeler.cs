@@ -48,18 +48,18 @@ public class APIHandeler : MonoBehaviour
         yield return www;
         if (www.error == null)
         {
-            Debug.Log("WWW received: " + www.text);
+            /*Debug.Log("WWW received: " + www.text);
             var jsonData = JsonConvert.DeserializeObject<Dictionary<string, object>>(www.text);
-            List<int> data = JsonConvert.DeserializeObject<List<int>>(jsonData["data"].ToString());
-            int[,] gameState = {{1,2,2,2,2},
-                                {2,2,2,2,0},
-                                {2,2,2,2,2},
-                                {2,2,2,2,2},
-                                {2,2,2,2,2}};
+            List<int> data = JsonConvert.DeserializeObject<List<int>>(jsonData["data"].ToString());*/
+            int[,] gameState = {{0,0,2,0,0},
+                                {2,2,0,2,0},
+                                {1,2,1,2,2},
+                                {2,2,2,2,1},
+                                {1,2,0,1,1}};
 
-            for(int i=0;i<data.Count;i++)
-                Debug.Log(data[i]);
-            GamePlayDataHolder.Instance.SetSuggestion(gameState, new int[]{1,0}, 2);
+           /* for(int i=0;i<data.Count;i++)
+                Debug.Log(data[i]);*/
+            GamePlayDataHolder.Instance.SetSuggestion(gameState, new int[]{4,2}, 1);
             SceneManager.LoadScene("Gameplay");
         }
         else

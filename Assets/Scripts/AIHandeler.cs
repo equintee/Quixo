@@ -15,11 +15,10 @@ public class AIHandeler : MonoBehaviour
     public static bool AITurn = false;
     gameController gameController;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         gameController = GetComponent<gameController>();
-        if(GamePlayDataHolder.Instance.selectedAgent == 1)
-            AIAgent = new minMax(1, minMaxDepth);
+        AIAgent = new minMax(1, minMaxDepth);
         AITurn = false;
     }
 

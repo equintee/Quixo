@@ -443,6 +443,8 @@ public class gameController : MonoBehaviour
         cubeList[selectedCube[0]][selectedCube[1]].GetComponent<cubeController>().cubeAnimated = true;
         gameController.selectedCube = cubeList[selectedCube[0]][selectedCube[1]];
 
+        SetSuggestionText(move);
+
     }
 
     public void SetSuggestionText(int move){

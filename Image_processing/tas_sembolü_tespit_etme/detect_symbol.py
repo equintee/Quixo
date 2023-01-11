@@ -4,7 +4,7 @@ import numpy as np
 from keras.models import load_model
 def detectSymbol():
   image_number = 0
-  symbol_order = []
+  symbolList = []
   while image_number < 25:
       
       img=cv2.imread('ROI_{}.png'.format(image_number))
@@ -18,7 +18,7 @@ def detectSymbol():
       
       pickle_in = open("model_trained_new.p","rb")
       model = pickle.load(pickle_in)
-      pickle_in.close()
+
       frame = img 
       
       
@@ -32,18 +32,17 @@ def detectSymbol():
           img = img.reshape(1,32,32,1)
       
 
-          
+      
         # predict
-          classIndex = int(model.predict(img))
+          classIndex = int(model.predict_classes(img))
+      
           predictions = model.predict(img)
           probVal = np.amax(predictions)
-          print(classIndex, 'ROI_{}.png'.format(image_number) )
-          symbol_order.append(classIndex)
+          print(classIndex, 'ROI_{}.png'.format(image_number))
+          symbolList.append(classIndex)
           image_number += 1
-  return symbol_order
+  return symbolList
 
-
-detectSymbol()
 
 
 

@@ -11,7 +11,7 @@ public class QLearningTrain
     private int AISymbol = 1;
     // Declare a lookup table for the Q-values of each state-action pair
     private Dictionary<string, float> qValues = new Dictionary<string, float>();
-    private minMax miniMaxAgent = new minMax(2, 2);
+    private minMax miniMaxAgent = new minMax(0, 2);
 
     // Train the agent by playing a series of games and updating the Q-values
     public void Train(int numGames)

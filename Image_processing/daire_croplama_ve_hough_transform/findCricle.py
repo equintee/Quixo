@@ -23,7 +23,7 @@ def findCircle():
     sharpen = cv2.filter2D(blur, -1, sharpen_kernel)
 
 
-
+    """
     #cv2.imshow('sharpen', sharpen)
     plt.figure(figsize=(12,8))
     plt.imshow(gray, cmap='gray')
@@ -32,6 +32,7 @@ def findCircle():
     plt.figure(figsize=(12,8))
     plt.imshow(sharpen, cmap='gray')
     plt.show()
+    """
 
     # Threshold and morph close
     thresh = cv2.adaptiveThreshold(sharpen,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,31,21)
@@ -43,6 +44,7 @@ def findCircle():
 
     #kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
     #opening = cv2.morphologyEx(close, cv2.MORPH_OPEN, kernel, iterations=1)
+    """
     plt.figure(figsize=(12,8))
     plt.imshow(thresh, cmap='gray')
     plt.show()
@@ -54,7 +56,7 @@ def findCircle():
     plt.figure(figsize=(12,8))
     plt.imshow(opening, cmap='gray')
     plt.show()
-
+    """
 
 
 
@@ -97,7 +99,6 @@ def findCircle():
         elif abs(x2-x1) < 10:  # Vertical line
             cv2.line(img, (x1, y1), (x2, y2), (0, 0, 0), 6)
 
-    cv2.imshow("foto", img)
 
 
 
@@ -127,9 +128,11 @@ def findCircle():
             cv2.rectangle(image, (x, y), (x + w, y + h), (36,255,12), 2)
             image_number += 1
 
+"""
     plt.figure(figsize=(12,8))
     plt.imshow(image, cmap='gray')
     plt.show()
+    """
 
 
 
