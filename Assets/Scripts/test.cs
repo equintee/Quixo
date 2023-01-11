@@ -8,7 +8,7 @@ public class test : MonoBehaviour
     void Start()
     {
         QLearningTrain qLearningTrain = new QLearningTrain();
-        qLearningTrain.Train(999);
+        qLearningTrain.Train(9999999);
         this.enabled = false;
         
     }

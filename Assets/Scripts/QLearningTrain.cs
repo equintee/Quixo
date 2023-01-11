@@ -11,6 +11,7 @@ public class QLearningTrain
     private int AISymbol = 1;
     // Declare a lookup table for the Q-values of each state-action pair
     private Dictionary<string, float> qValues = new Dictionary<string, float>();
+    private minMax miniMaxAgent = new minMax(2);
 
     // Train the agent by playing a series of games and updating the Q-values
     public void Train(int numGames)
@@ -36,7 +37,7 @@ public class QLearningTrain
                 int[,] nextBoard = MakeMove(board, opponentMove, AISymbol);
 
                 List<int[]> avaliableMoves = AvaliableMoves(nextBoard, AISymbol);
-                int[] action = avaliableMoves[rng.Next(0, avaliableMoves.Count)];
+                int[] action = ChooseAction(board, rng);
 
                 // Take the action and observe the next state and reward
                 nextBoard = MakeMove(board, action, AISymbol);
@@ -50,7 +51,7 @@ public class QLearningTrain
             }
         }
 
-        SaveQTable("a.json");
+        SaveQTable("QLearningTable.json");
     }
 
     private int[] ChooseAction(int[,] board, System.Random rng)
@@ -87,10 +88,7 @@ public class QLearningTrain
 
     private float GetReward(int[,] board)
     {
-        int winner = DetermineWinner(board);  
-        if(winner == -1)
-            return 0;
-        return winner == AISymbol ? 1 : -1;
+        return miniMaxAgent.MiniMax(board, 2, false);
     }
     // Update the Q-value for a state-action pair using the Q-learning algorithm
     private void UpdateQValue(int[,] state, int[] action, float reward, int[,] nextState)

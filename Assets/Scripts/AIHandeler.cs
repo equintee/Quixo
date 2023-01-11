@@ -6,10 +6,11 @@ using UnityEngine;
 public class AIHandeler : MonoBehaviour
 {
     private float deltaTime = 0f;
-    public GameObject AIPickedCube;
+    [HideInInspector]public GameObject AIPickedCube;
     private int[] position = new int[2];
-    public int move = -1;
-
+    [HideInInspector]public int move = -1;
+    [Range(1,5)]
+    public int minMaxDepth;
     private minMax MinMaxAI;
     public static bool AITurn = false;
     gameController gameController;
@@ -29,7 +30,7 @@ public class AIHandeler : MonoBehaviour
             deltaTime += Time.deltaTime;
             if(move == -1)
             {
-                int[] AIMove = MinMaxAI.MiniMax(gameController.gameBoardToArray(), 2);
+                int[] AIMove = MinMaxAI.MiniMax(gameController.gameBoardToArray(), minMaxDepth);
                 position = new int[2] {AIMove[0], AIMove[1]};
                 move = AIMove[2];
                 AIPickedCube = gameController.cubeList[position[0]][position[1]];

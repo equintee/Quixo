@@ -17,22 +17,34 @@ public class gameController : MonoBehaviour
     private bool gameEnded = false;
     public GameObject turnCanvas;
     public GameObject endGameCanvas;
-    void Awake()
+    public GameObject suggestionCanvas;
+    public TextMeshProUGUI suggestedMoveText;
+    void Start()
     {
         turn = 0;
         cubeList = new List<List<GameObject>>();
 
-        for (int i = 0; i < 25; i+=5)
-        {
-            List<GameObject> tempVerticalCubeList = new List<GameObject>();
-            
-            for(int j = i; j<i+5; j++)
-            {
-                tempVerticalCubeList.Add(this.transform.GetChild(j).gameObject);
-            }
-            cubeList.Add(tempVerticalCubeList);           
+        if(GamePlayDataHolder.Instance.AISuggestedMove){
+            GamePlayDataHolder gamePlayDataHolder = GamePlayDataHolder.Instance;
+            initializeGameState(gamePlayDataHolder.gameState, gamePlayDataHolder.suggestedCube, gamePlayDataHolder.move);
+            gamePlayDataHolder.AISuggestedMove = false;
         }
-        selectedCube = cubeList[0][0];
+        else{
+
+            for (int i = 0; i < 25; i+=5)
+            {
+                List<GameObject> tempVerticalCubeList = new List<GameObject>();
+                
+                for(int j = i; j<i+5; j++)
+                {
+                    tempVerticalCubeList.Add(this.transform.GetChild(j).gameObject);
+                }
+                cubeList.Add(tempVerticalCubeList);           
+            }
+            selectedCube = cubeList[0][0];
+
+        }
+        
     }
 
     private Touch touch;
@@ -158,7 +170,7 @@ public class gameController : MonoBehaviour
                         int winner = checkGameStatus();
                         AIHandeler.AITurn = winner == -1 ?!AIHandeler.AITurn : false;
                         
-                        
+                        suggestionCanvas.SetActive(false);
                     }
 
                     resetAllCubes();
@@ -423,6 +435,33 @@ public class gameController : MonoBehaviour
                 gameBoardArray[i,j] = cubeList[i][j].GetComponent<cubeController>().cubeValue;
 
         return gameBoardArray;
+    }
+
+    public void initializeGameState(int[,] gameState, int[] selectedCube, int move){
+        turn = 0;
+        for(int i = 0; i<5; i++)
+            for(int j = 0; j<5; j++){
+                cubeList[i][j].GetComponent<cubeController>().SetCubeValue(gameState[i,j]);
+            }
+        cubeList[selectedCube[0]][selectedCube[1]].GetComponent<cubeController>().cubeAnimated = true;
+
+    }
+
+    public void SetSuggestionText(int move){
+        // 0:down, 1:up, 2:left, 3:right
+        string suggestionText = "Cube should be moved ";
+
+        if(move == 0)
+            suggestionText += "downwards!";
+        else if(move == 1)
+            suggestionText += "upwards!";
+        else if(move == 2)
+            suggestionText += "left!";
+        else
+            suggestionText += "right!";
+        
+        suggestionCanvas.SetActive(true);
+        suggestedMoveText.text = suggestionText;
     }
 
 }

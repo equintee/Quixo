@@ -10,7 +10,7 @@ public class cubeController : MonoBehaviour
     public bool cubeAnimated = false;
     public bool cubeMoving = false;
     public Vector3 defaultPosition;
-    void Start()
+    void Awake()
     {
         cubeValue = 2;
         defaultPosition = transform.localPosition;
@@ -74,5 +74,10 @@ public class cubeController : MonoBehaviour
     public void rotateCube() //0:X 1:O
     {
         transform.localRotation = cubeValue == 2 ? Quaternion.Euler(90, 0, 0) : Quaternion.Euler(cubeValue * 180 + 180, 0, 0);
+    }
+
+    public void SetCubeValue(int value){
+        cubeValue = value;
+        rotateCube();
     }
 }
