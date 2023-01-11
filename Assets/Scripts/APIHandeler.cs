@@ -59,8 +59,8 @@ public class APIHandeler : MonoBehaviour
 
             for(int i=0;i<data.Count;i++)
                 Debug.Log(data[i]);
+            GamePlayDataHolder.Instance.SetSuggestion(gameState, new int[]{1,0}, 2);
             SceneManager.LoadScene("Gameplay");
-            FindObjectOfType<gameController>().initializeGameState(gameState, new int[]{4,0}, 3);
         }
         else
         {

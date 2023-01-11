@@ -23,14 +23,6 @@ public class gameController : MonoBehaviour
     {
         turn = 0;
         cubeList = new List<List<GameObject>>();
-
-        if(GamePlayDataHolder.Instance.AISuggestedMove){
-            GamePlayDataHolder gamePlayDataHolder = GamePlayDataHolder.Instance;
-            initializeGameState(gamePlayDataHolder.gameState, gamePlayDataHolder.suggestedCube, gamePlayDataHolder.move);
-            gamePlayDataHolder.AISuggestedMove = false;
-        }
-        else{
-
             for (int i = 0; i < 25; i+=5)
             {
                 List<GameObject> tempVerticalCubeList = new List<GameObject>();
@@ -43,7 +35,12 @@ public class gameController : MonoBehaviour
             }
             selectedCube = cubeList[0][0];
 
+        if(GamePlayDataHolder.Instance.AISuggestedMove){
+            GamePlayDataHolder gamePlayDataHolder = GamePlayDataHolder.Instance;
+            initializeGameState(gamePlayDataHolder.gameState, gamePlayDataHolder.suggestedCube, gamePlayDataHolder.move);
+            gamePlayDataHolder.AISuggestedMove = false;
         }
+
         
     }
 
@@ -444,6 +441,7 @@ public class gameController : MonoBehaviour
                 cubeList[i][j].GetComponent<cubeController>().SetCubeValue(gameState[i,j]);
             }
         cubeList[selectedCube[0]][selectedCube[1]].GetComponent<cubeController>().cubeAnimated = true;
+        gameController.selectedCube = cubeList[selectedCube[0]][selectedCube[1]];
 
     }
 
