@@ -22,6 +22,7 @@ public class APIHandeler : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Q)){
             Debug.Log("asd");
             TakePhoto(true);
+            
             this.enabled = false;
         }
             

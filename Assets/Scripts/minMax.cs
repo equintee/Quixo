@@ -1,10 +1,6 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Unity.Mathematics;
-using UnityEditorInternal;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 public class minMax : IAgent
 {
@@ -30,6 +26,7 @@ public class minMax : IAgent
 
     public int[] MakeMove(int[,] board){
         Dictionary<int[], int> scores = new Dictionary<int[], int>();
+        int depth = this.depth;
         depth--;
         foreach(int[] avaliableMove in AvaliableMoves(board, AISymbol)){
             int[,] childBoard = MakeMove((int[,]) board.Clone(), avaliableMove, AISymbol);
